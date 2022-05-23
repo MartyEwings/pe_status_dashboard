@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script type="application/javascript" src="{{ url_for('static',filename='scripts/rpie.js') }}"></script>
+</head>
+<div class="container">
+    <div class="box">
+        <div class="left-bar"><span class="fa fa-cloud-download"></span>
+            <div class="menu-group"> <span class="fa"><a class="linker" href="{{ url_for('failing') }}">Failing</a></span>
+            </div>
+            <div class="menu-group"> <span class="fa"><a class="linker" href="{{ url_for('passing') }}">Passing</a></span>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="top-bar"><span class="cloud">Status Check Dashboard</span>
+            </div>
+
+            <div class="content">
+                    <div><span style="color: #000000; font-size: large; padding-left: 50%; margin-top: 2%;">Servers: {{ server_total }}</span></div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <h2 style="text-align: center; color: #000000; font-size: large;">{{ total_pass }} Passing Nodes
+                    </h2>
+                    <div class="mypiechart" style="text-align: center;">
+                        <canvas id="passing" width="400" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="column">
+                    <h2 style="text-align: center; color: #000000; font-size: large;">{{ total_fail }} Failing Nodes
+                    </h2>
+                    <div class="mypiechart" style="text-align: center;">
+                        <canvas id="failing" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        <div class="grid">
+            {% for key, value in failing_nodes_info.items() %}
+            <div class="cardfail">
+                <div class="number"><span>{{ value.failed_tests_count }}</span></div>
+                <div class="product-name"><span>{{ key }}</span></div>
+                <div class="overlay">
+                    <div class="detail"><span><a class="linker"
+                                href="{{ url_for('failed_node_info', node = key) }}">Details</a></span></span></div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for key, value in passing_nodes_info.items() %}
+
+            <div class="cardpass">
+                <div class="product-name"><span>{{ key }}</span></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    var pass = {
+        pie: 'stroke',
+        values: ['{{ passing_nodes }}'],
+        colors: ['green'],
+        isStrokePie: {
+            stroke: 20,
+            overlayStroke: true,
+            overlayStrokeColor: '#eee',
+            strokeStartEndPoints: 'Yes',
+            strokeAnimation: true,
+            strokeAnimationSpeed: 40,
+            fontSize: '60px',
+            textAlignement: 'center',
+            fontFamily: 'Arial',
+            fontWeight: 'bold'
+        }
+    };
+    generatePieGraph('passing', pass);
+
+    var fail = {
+        pie: 'stroke',
+        values: ['{{ failing_nodes }}'],
+        colors: ['red'],
+        isStrokePie: {
+            stroke: 20,
+            overlayStroke: true,
+            overlayStrokeColor: '#eee',
+            strokeStartEndPoints: 'Yes',
+            strokeAnimation: true,
+            strokeAnimationSpeed: 40,
+            fontSize: '60px',
+            textAlignement: 'center',
+            fontFamily: 'Arial',
+            fontWeight: 'bold'
+        }
+    };
+    generatePieGraph('failing', fail);
+</script>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <script type="application/javascript" src="{{ url_for('static',filename='scripts/rpie.js') }}"></script>
+</head>
+<div class="container">
+    <div class="box">
+        <div class="left-bar"><span class="fa fa-cloud-download"></span>
+            <div class="menu-group"> <span class="fa"><a class="linker" href="{{ url_for('all') }}">Home</a></span>
+            </div>
+            <div class="menu-group"> <span class="fa"><a class="linker" href="{{ url_for('failing') }}">Failing</a></span>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="top-bar"><span class="cloud">Status Check Dashboard</span>
+            </div>
+
+            <div class="content">
+                    <div><span style="color: #000000; font-size: large; padding-left: 50%; margin-top: 2%;">Servers: {{ total }}</span></div>
+            </div>
+            
+        <div class="grid">
+            {% for key, value in passing_nodes_info.items() %}
+            <div class="cardpass">
+                <div class="product-name"><span>{{ key }}</span></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>

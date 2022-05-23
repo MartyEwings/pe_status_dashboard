@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    </script>
+</head>
+<div class="container">
+    <div class="box">
+        <div class="left-bar"><span class="fa fa-cloud-download"></span>
+            <div class="menu-group"> <span class="fa"><a class="linker" href="{{ url_for('all') }}">All</a></span>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="top-bar"><span class="cloud">{{ node }}</span>
+            </div>
+            <div class="content">
+            </div>
+            <div class="grid">
+                {% for error in failing_nodes_info.failed_tests_details %}
+                <div class="cardfailinfo">
+                    <div class="product-name"><span>{{ error }}</span></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
